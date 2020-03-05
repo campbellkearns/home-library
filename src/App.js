@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Book from './components/Book'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import Axios from 'axios';
+
+
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: 'My Home',
+      books: []
+    }
+  }
+
+  componentDidMount() {
+    Axios.get("http://www.json-generator.com/api/json/get/cgwULHiWDC?indent=2")
+      .then(response => {
+        const books = response.data;
+        this.setState({books: books})
+      })
+  }
+  // book should have a title, author, number of pages, and genre
+  render() {
+    return (
+      <div className="App">
+        <h1>{this.state.title} Library</h1>
+        {this.state.books.map((book) => <Book book={book} />)}
+      </div>
+    );
+  }
 }
 
-export default App;
+export default App
