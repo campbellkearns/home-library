@@ -12,12 +12,14 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     fetch("http://www.json-generator.com/api/json/get/cgwULHiWDC?indent=2")
       .then(response => response.json())
       .then(data => {
         const books = data;
         this.setState({books: books});
       })
+      
   }
 
   render() {
